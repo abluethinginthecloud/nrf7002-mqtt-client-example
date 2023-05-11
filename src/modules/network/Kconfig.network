@@ -1,0 +1,42 @@
+#
+# Copyright (c) 2023 Nordic Semiconductor
+#
+# SPDX-License-Identifier: LicenseRef-Nordic-5-Clause
+#
+
+menu "Network"
+	depends on LTE_LINK_CONTROL || (WIFI_NRF700X && WIFI_MGMT_EXT) || BOARD_NATIVE_POSIX
+
+config MQTT_SAMPLE_NETWORK_THREAD_STACK_SIZE
+	int "Thread stack size"
+	default 4096
+
+choice  STA_KEY_MGMT_SELECT
+	prompt "Security Option"
+	default STA_KEY_MGMT_WPA3
+
+config STA_KEY_MGMT_NONE
+	bool "Open Security"
+	help
+	  Enable for Open Security
+
+config STA_KEY_MGMT_WPA2
+	bool "WPA2 Security"
+	help
+	  Enable for WPA2 Security
+
+config STA_KEY_MGMT_WPA2_256
+	bool "WPA2 SHA 256 Security"
+	help
+	  Enable for WPA2-PSK-256 Security
+
+config STA_KEY_MGMT_WPA3
+	bool "WPA3 Security"
+	help
+	  Enable for WPA3 Security
+endchoice
+module = MQTT_SAMPLE_NETWORK
+module-str = Network
+source "subsys/logging/Kconfig.template.log_config"
+
+endmenu # Network
